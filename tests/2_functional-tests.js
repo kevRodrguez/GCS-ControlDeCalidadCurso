@@ -90,24 +90,26 @@ suite('Functional Tests with Zombie.js', function () {
     // #5
     test('Submit the surname "Colombo" in the HTML form', function (done) {
       browser.fill('surname', 'Colombo').then(function () {
-        return browser.pressButton('submit');
-      }).then(function () {
-        assert.isTrue(browser.success);
-        assert.equal(browser.text('span#name'), 'Cristoforo');
-        assert.equal(browser.text('span#surname'), 'Colombo');
-        assert.equal(browser.querySelectorAll('span#dates').length, 1);
-        done();
-      }).catch(done);
+        browser.pressButton('submit', function () {
+          browser.assert.success();
+          browser.assert.text('span#name', 'Cristoforo');
+          browser.assert.text('span#surname', 'Colombo');
+          browser.assert.elements('span#dates', 1);
+          done();
+        });
+      });
     });
     // #6
     test('Submit the surname "Vespucci" in the HTML form', function (done) {
       browser.fill('surname', 'Vespucci').then(function () {
-        return browser.pressButton('submit');
-      }).then(function () {
-        assert.equal(browser.text('span#name'), 'Amerigo');
-        assert.equal(browser.text('span#surname'), 'Vespucci');
-        done();
-      }).catch(done);
+        browser.pressButton('submit', function () {
+          browser.assert.success();
+          browser.assert.text('span#name', 'Amerigo');
+          browser.assert.text('span#surname', 'Vespucci');
+          browser.assert.elements('span#dates', 1);
+          done();
+        });
+      });
     });
   });
 });
